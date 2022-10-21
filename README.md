@@ -4,9 +4,9 @@
 1. [Introduction](https://github.com/ngandh/F2LCough#Introduction)
 2. [Dataset](https://github.com/ngandh/F2LCough#Data)
 3. [Getting started](https://github.com/ngandh/F2LCough#Getting-started)
-3.1. [Requirements](https://github.com/ngandh/F2LCough#Requirements)
-3.2. [Installation](https://github.com/ngandh/F2LCough#Installation)
-3.3. [How to run](https://github.com/ngandh/F2LCough#How-to-run)
+    3.1. [Requirements](https://github.com/ngandh/F2LCough#Requirements)
+    3.2. [Installation](https://github.com/ngandh/F2LCough#Installation)
+    3.3. [How to run](https://github.com/ngandh/F2LCough#How-to-run)
 
 ## Introduction
 Detecting cough sounds is an important problem in supporting the diagnosis and treatment of respiratory diseases.  However, collecting a huge amount of labeled cough dataset is challenging mainly due to high laborious expenses, data scarcity, and privacy concerns. In this work, we develop a framework called F2LCough that can perform cough classification effectively even in situations. F2LCough not only learns effectively in scarce data situations but also ensures the privacy of patients supplying audio by combining both few-shot and federated learning technique.
