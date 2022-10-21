@@ -2,3 +2,7 @@ torch
 torchnet
 torchaudio
 torchvision
+visdom==0.2.1
+transformers==3.3.0
+tensorboardX
+spafe

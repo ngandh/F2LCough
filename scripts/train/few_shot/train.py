@@ -23,7 +23,7 @@ import dill
 def update_weights(opt, model, train_loader, val_loader):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     opt['log.exp_dir'] = os.path.join('./fewshotspeech/results', opt['log.exp_dir'], timestamp)
-    opt['log.exp_dir'] = "/content/cough_classification/few-shot-ho-master/results/Ngan/" + timestamp
+    opt['log.exp_dir'] = "/content/drive/MyDrive/cough_detection/few-shot-fed/few-shot-ho/results/Ngan/" + timestamp
     os.makedirs(opt['log.exp_dir'])
     
     # save opts
@@ -106,6 +106,8 @@ def update_weights(opt, model, train_loader, val_loader):
             if opt['data.cuda']:
                 state['model'].cuda()
         # return acc_val, loss_val
+      
+
 
     engine.hooks['on_end_epoch'] = partial(on_end_epoch, { })
 
@@ -118,15 +120,16 @@ def update_weights(opt, model, train_loader, val_loader):
                         'weight_decay': opt['train.weight_decay'] },
         max_epoch = opt['train.epochs']
     )
+    
     end = time.time()
     elapsed = str(timedelta(seconds= end-start))
-    
+    # print('grad_train: ', grad_train)
     return w, acc_train, loss, acc_val, loss_val
 
 def main(opt):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     opt['log.exp_dir'] = os.path.join('./results', opt['log.exp_dir'], timestamp)
-    opt['log.exp_dir'] = "/content/cough_classification/few-shot-ho-master/results/Ngan/" + timestamp
+    opt['log.exp_dir'] = "/content/drive/MyDrive/cough_detection/few-shot-fed/few-shot-ho/results/Ngan/" + timestamp
     os.makedirs(opt['log.exp_dir'])
     
     # save opts
@@ -226,7 +229,7 @@ def main(opt):
                     print("==> patience {:d} exceeded".format(opt['train.patience']))
                     state['stop'] = True
         else:
-            state['model'].cpu()
+            state['model'].cpu()("==> patience {:d} exceeded".format(opt['train.patience']))      
             torch.save(state['model'], os.path.join(opt['log.exp_dir'], 'best_model.pt'), pickle_module=dill)
             if opt['data.cuda']:
                 state['model'].cuda()

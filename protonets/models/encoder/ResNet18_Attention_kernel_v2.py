@@ -168,6 +168,7 @@ class ResNet(nn.Module):
     def __init__(self, blocks, layer_dims, num_classes=9, training = False):
         super(ResNet, self).__init__()
         self.in_channels = 64 #ban dau 64
+        num_classes=48
 
         self.stem = nn.Sequential(nn.Conv2d(1, 64, kernel_size=(3,1), padding='same', stride=1),
                                 nn.BatchNorm2d(64, affine = training)) #ban dau in: 64

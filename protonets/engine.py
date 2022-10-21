@@ -1,4 +1,6 @@
 from tqdm import tqdm
+import torch 
+from statistics import mean
 
 class Engine(object):
     def __init__(self):
@@ -35,6 +37,7 @@ class Engine(object):
         while state['epoch'] < state['max_epoch'] and not state['stop']:
             state['model'].train()
             epoch_loss = []
+            epoch_grad = []
 
             self.hooks['on_start_epoch'](state)
 
@@ -56,12 +59,23 @@ class Engine(object):
                 state['t'] += 1
                 state['batch'] += 1
                 self.hooks['on_update'](state)
+                
+                #add to calculate grad_train: start
+                param_grad = []
+                for tag, param in state['model'].named_parameters():
+                  # print(tag + '_grad: {}\n'.format(torch.mean(param.grad))) -- của 1 param
+                  param_grad.append(torch.mean(param.grad).item())
 
+                # print('param_grad: ', param_grad)
+                epoch_grad.append(mean(param_grad))
+                #add to calculate grad_train: end
                 epoch_loss.append(loss.item())
-
+            print('grad_per_epoch: ', sum(epoch_grad) / len(epoch_grad))
             state['epoch'] += 1
             state['batch'] = 0
             self.hooks['on_end_epoch'](state)
 
         self.hooks['on_end'](state)
+        #add to return grad_train
         return state['model'].state_dict(), state['output']['acc'], sum(epoch_loss) / len(epoch_loss), state['acc_val'], state['loss_val']
+      

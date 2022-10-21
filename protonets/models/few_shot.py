@@ -15,7 +15,9 @@ from protonets.models.encoder.MLP import MyModel
 #from torch.utils.tensorboard import SummaryWriter
 import os
 from protonets.models.encoder.ResNet18_Attention import ResNet18
-
+from protonets.models.encoder.ResNet18_Attention_kernel_v2 import ResNet18_kernel_v2
+from protonets.models.encoder.ResNet18_Attention_dilation_v2 import ResNet18_dilation_v2
+from protonets.models.encoder.ResNet18_Attention_kernel_dilation_v2 import ResNet18_kernel_dilation_v2
 from .utils import euclidean_dist
 
 class Protonet(nn.Module):
@@ -85,14 +87,27 @@ class Protonet(nn.Module):
 
         dists = euclidean_dist(zq, z_proto)
 
+        # #START: use distances to predict
+        # separated_dists= dists.view(n_class, n_query, -1)
+        # loss_val = separated_dists.gather(2, target_inds).squeeze().view(-1).mean()
+        # _, y_hat = separated_dists.min(2)
+        # # print('target_inds: ', target_inds)
+        # #END: use distances to predict
+
+        #START: use log_softmax
         log_p_y = F.log_softmax(-dists, dim=1).view(n_class, n_query, -1)
+        # print('log_p_y:', log_p_y)
 
         loss_val = -log_p_y.gather(2, target_inds).squeeze().view(-1).mean()
 
         _, y_hat = log_p_y.max(2)
+        #END: use log_softmaX
+        
         acc_val = torch.eq(y_hat, target_inds.squeeze()).float().mean()
         # print("target_inds ", target_inds.squeeze())
         # print("y_hat", y_hat)
+
+        # #start: print class and prediction
         # first = 0
         # second = 0
         # for i in range(target_inds.squeeze()[0].shape[0]): #nhãn 0
@@ -106,6 +121,7 @@ class Protonet(nn.Module):
         # f_str = str(first) + "/" + str(first_len)
         # s_str = str(second) + "/" + str(second_len)
         # print("\nPREDICT: ", f_str, s_str) 
+        # #end: print class and prediction
         
         return loss_val, {
             'loss': loss_val.item(),
@@ -132,6 +148,12 @@ def get_enocder(encoding, x_dim, hid_dim, out_dim):
         return MLP(16, 64, 48)
     elif encoding == 'Attention':
         return ResNet18()
+    elif encoding == 'Attention_kernel_v2':
+        return ResNet18_kernel_v2()
+    elif encoding == 'Attention_dilation_v2':
+        return ResNet18_dilation_v2()
+    elif encoding == 'Attention_kernel_dilation_v2':
+        return ResNet18_kernel_dilation_v2()
 
 @register_model('protonet_conv')
 def load_protonet_conv(**kwargs):
