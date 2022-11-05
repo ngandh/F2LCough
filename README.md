@@ -1,5 +1,6 @@
 # _Federated Few-shot learning for cough classification_
 ![F2LCough workflow](https://github.com/ngandh/F2LCough/blob/main/figures/F2LCough_workflow.png?raw=true "F2LCough workflow")
+Link to video on Youtube: https://www.youtube.com/watch?v=ri77TvXXKMY
 ### Table of Content
 1. [Introduction](https://github.com/ngandh/F2LCough#Introduction)
 2. [Dataset](https://github.com/ngandh/F2LCough#Data)
