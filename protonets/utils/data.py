@@ -79,9 +79,11 @@ def loader(opt, splits):
             data_dir = []
             class_dir = []
             for i in range(1, 6):
-              path = "/content/drive/MyDrive/cough_detection/cough_data/learn_novel_set/set" + str(i)
+              # path = "/content/drive/MyDrive/cough_detection/cough_data/learn_novel_set/set" + str(i)
+              path = "/content/cough_classification/F2LCough/data/train/set"+ str(i)
               data_dir.append(os.path.join(os.path.dirname(__file__), path))
-              class_file = os.path.join(os.path.dirname(__file__), '../../data/speech_commands/core', split+'_set'+
+              # class_file = os.path.join(os.path.dirname(__file__), '../../data/speech_commands/core', split+'_set'+
+              class_file = os.path.join(os.path.dirname(__file__), '../../core', split+'_set'+
               str(i) + '.txt')
               class_dir.append(class_file)
               # print("class_file", class_file)
