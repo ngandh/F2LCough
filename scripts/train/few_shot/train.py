@@ -23,7 +23,7 @@ import dill
 def update_weights(opt, model, train_loader, val_loader):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     opt['log.exp_dir'] = os.path.join('./fewshotspeech/results', opt['log.exp_dir'], timestamp)
-    opt['log.exp_dir'] = "/content/drive/MyDrive/cough_detection/few-shot-fed/few-shot-ho/results/Ngan/" + timestamp
+    opt['log.exp_dir'] = "/results/Ngan/" + timestamp
     os.makedirs(opt['log.exp_dir'])
     
     # save opts
@@ -129,7 +129,7 @@ def update_weights(opt, model, train_loader, val_loader):
 def main(opt):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     opt['log.exp_dir'] = os.path.join('./results', opt['log.exp_dir'], timestamp)
-    opt['log.exp_dir'] = "/content/drive/MyDrive/cough_detection/few-shot-fed/few-shot-ho/results/Ngan/" + timestamp
+    opt['log.exp_dir'] = "/results/Ngan/" + timestamp
     os.makedirs(opt['log.exp_dir'])
     
     # save opts
